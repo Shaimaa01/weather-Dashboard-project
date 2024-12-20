@@ -1,0 +1,6 @@
+/* App.css */
+.custom-border li:not(:last-child) {
+    border-bottom: 1px solid rgb(55 65 81); 
+  }
+  
+ 
