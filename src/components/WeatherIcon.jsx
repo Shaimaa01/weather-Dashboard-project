@@ -13,7 +13,6 @@ import Daysnow from "../assets/icons/daySnow.svg";
 import Nightsnow from "../assets/icons/nightSnow.svg";
 import fog from "../assets/icons/fog-svgrepo-com.svg";
 
-
 const weatherIconMap = {
   "01d": daySunny,
   "01n": nightClear,
@@ -40,13 +39,7 @@ const defaultIcon = cloudy;
 const WeatherIcon = ({ iconCode }) => {
   const iconSrc = weatherIconMap[iconCode] || defaultIcon;
 
-  return (
-    <img
-      src={iconSrc} 
-      alt={iconCode} 
-      className="w-20 h-20"
-    />
-  );
+  return <img src={iconSrc} alt={iconCode} className="w-20 h-20 m-auto" />;
 };
 
 export default WeatherIcon;

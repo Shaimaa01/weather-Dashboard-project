@@ -27,9 +27,9 @@ const CurrentDateTime = () => {
     };
 
     updateTime();
-    const timer = setInterval(updateTime, 1000); // Update every second
+    const timer = setInterval(updateTime, 1000);
 
-    return () => clearInterval(timer); // Cleanup the timer on component unmount
+    return () => clearInterval(timer); 
   }, []);
   return<div>{currentTime}</div> ;
 };

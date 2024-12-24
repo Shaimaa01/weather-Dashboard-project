@@ -3,7 +3,7 @@
 import { useState, useEffect } from "react";
 import { getForecast } from "../services/WeatherForecast";
 import WeatherIcon from "./WeatherIcon";
-import "../App.css"
+import "../App.css";
 
 const WeatherForDays = ({ city }) => {
   if (city) {
@@ -48,15 +48,15 @@ const WeatherForDays = ({ city }) => {
 
       // Return the formatted string
       return (
-        <div className="flex justify-between items-center   ">
-          <p className="min-w-[42px] text-gray-500 ">{dayOfWeek}</p>
-          <div className="flex items-center justify-start min-w-[130px] ">
+        <div className="flex justify-between items-center py-1  ">
+          <p className="min-w-[63px] text-gray-500 ">{dayOfWeek}</p>
+          <div className="flex items-center justify-start   w-[142px] ">
             <div>
               <WeatherIcon iconCode={iconCode} />
             </div>
-            <p>{weatherDescription}</p>
+            <p className="font-medium pr-4">{weatherDescription}</p>
           </div>
-          <p className="font-medium">
+          <p className="font-medium   min-w-[63px] text-right">
             {tempMin}
             <span className="text-gray-500">/{tempMax}</span>
           </p>
@@ -64,22 +64,22 @@ const WeatherForDays = ({ city }) => {
       );
     };
 
-    console.log(forecastData);
-
     return (
-      <div className="bg-gray-800  rounded-xl my-10 mx-10 text-slate-300 p-4">
+      <div className="bg-gray-800  rounded-3xl my-10 mx-10 text-slate-300 px-8 py-10 ">
         {error && <p>{error}</p>}
-        <h2 className="text-gray-500 text-md uppercase font-medium">
+        <h2 className="text-gray-500 uppercase font-bold tracking-tight  text-sm">
           7-Dayforcast
         </h2>
         {forecastData ? (
           <ul className=" custom-border">
             {getUniqueForecast(forecastData).map((day, index) => (
-              <li className="" key={index}>{formatForecast(day, index === 0)}</li>
+              <li className="" key={index}>
+                {formatForecast(day, index === 0)}
+              </li>
             ))}
           </ul>
         ) : (
-          <p>Loading forecast...</p>
+          <p><i className="fas fa-spinner fa-spin"></i> Loading...</p>
         )}
       </div>
     );
@@ -88,4 +88,4 @@ const WeatherForDays = ({ city }) => {
 
 export default WeatherForDays;
 
-// border-b border-gray-700
+

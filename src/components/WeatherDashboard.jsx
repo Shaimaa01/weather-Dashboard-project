@@ -1,23 +1,15 @@
 import { useState, useEffect } from "react";
 import { getWeather } from "../services/weatherService.js";
-import CurrentDateTime from "./CurrentDateTime.jsx";
 import WeatherForDays from "./WeatherForDays.jsx";
+import WeatherForHours from "./WeatherForHours.jsx";
+import PredefinedCities from "./PredefinedCities.jsx";
+import CityTimeFetcher from "./CityTimeFetcher.jsx";
+import CityMap from "./CityMap.jsx";
 
 const WeatherDashboard = () => {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState();
-
-  // eslint-disable-next-line no-unused-vars
   const [error, setError] = useState("");
-
-  // List of predefined cities
-  const predefinedCities = [
-    "Brazil",
-    "Poland",
-    "Japan",
-    "Antarctica",
-    "Australia",
-  ];
 
   //   to handle predfined citys
   const handlePredefinedCityClick = async (selectedCity) => {
@@ -35,10 +27,8 @@ const WeatherDashboard = () => {
       setTimeout(() => {
         setCity("");
       }, 2000);
-
-      // eslint-disable-next-line no-unused-vars
     } catch (error) {
-      setError("City not found or API error");
+      setError(error.message);
     }
   };
 
@@ -118,10 +108,8 @@ const WeatherDashboard = () => {
           saveToLocalStorage(data);
 
           setCity("");
-
-          // eslint-disable-next-line no-unused-vars
         } catch (error) {
-          setError("City not found or API error");
+          setError(error.message);
         }
       };
 
@@ -135,15 +123,9 @@ const WeatherDashboard = () => {
     return (
       // container
 
-      <div
-        className="grid grid-cols-3 max-md:block  "
-        
-      >
+      <div className=" ">
         {/* img */}
-        <div
-          className="col-span-2 w-full h-screen relative  bg-cover bg-center py-10 lg:px-20 md:px-4 max-md:px-4 text-[#E0E3E3]"
-        
-        >
+        <div className="col-span-2 w-full h-screen relative  bg-cover bg-center py-10 lg:px-20 md:px-4 max-md:px-4 text-[#E0E3E3]">
           {/* Overlay */}
           <div className="absolute inset-0 bg-[#28413E] opacity-45"></div>
 
@@ -158,9 +140,12 @@ const WeatherDashboard = () => {
                 <p className=" lg:text-4xl md:text-3xl max-md:text-2xl">
                   {weatherData.name}
                 </p>
-                <CurrentDateTime />
               </div>
-
+              {/* Pass city prop to WeatherForHours */}
+              <CityTimeFetcher
+                lat={weatherData.coord.lat}
+                lng={weatherData.coord.lon}
+              />
               {/* icon */}
               <div className=" w-20 h-20 rounded-full self-end max-md:self-center ">
                 <img
@@ -194,17 +179,9 @@ const WeatherDashboard = () => {
             </div>
 
             {/* cities */}
-            <div className=" pt-5 pb-5  mr-10  border-b border-[#9EA7A6] ">
-              {predefinedCities.map((predefinedCity) => (
-                <button
-                  key={predefinedCity}
-                  onClick={() => handlePredefinedCityClick(predefinedCity)}
-                  className=" block text-[#979fa1]  font-semibold text-md  hover:bg-[#71858317] hover:text-[#E0E3E3] rounded  w-full text-start py-3 my-1 "
-                >
-                  {predefinedCity}
-                </button>
-              ))}
-            </div>
+            <PredefinedCities
+              handlePredefinedCityClick={handlePredefinedCityClick}
+            />
 
             {/* Weather details */}
             <div className="pt-10 mr-10  border-b border-[#9EA7A6]  ">
@@ -240,9 +217,23 @@ const WeatherDashboard = () => {
         </div>
         {/* Pass city prop to WeatherForDays */}
         <WeatherForDays city={weatherData.name} />
+        {/* Pass city prop to WeatherForHours */}
+        <WeatherForHours city={weatherData.name} />
+        {/* Pass  prop to CityMap */}
+        <CityMap
+          lat={weatherData.coord.lat}
+          lng={weatherData.coord.lon}
+        
+        />
       </div>
     );
   }
+  return (
+    <div>
+      {error && <p>{error}</p>}
+      <h2>Loading...</h2>
+    </div>
+  );
 };
 
 export default WeatherDashboard;
