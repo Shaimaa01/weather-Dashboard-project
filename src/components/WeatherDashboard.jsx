@@ -1,10 +1,6 @@
 import { useState, useEffect } from "react";
 import { getWeather } from "../services/weatherService.js";
-import WeatherForDays from "./WeatherForDays.jsx";
-import WeatherForHours from "./WeatherForHours.jsx";
-import PredefinedCities from "./PredefinedCities.jsx";
-import CityTimeFetcher from "./CityTimeFetcher.jsx";
-import CityMap from "./CityMap.jsx";
+import WeatherDashboardDisplayed from "./WeatherDashboardDisplayed.jsx";
 
 const WeatherDashboard = () => {
   const [city, setCity] = useState("");
@@ -119,120 +115,17 @@ const WeatherDashboard = () => {
     }
   }, []);
 
-  if (weatherData) {
-    return (
-      // container
+  console.log(weatherData)
 
-      <div className=" ">
-        {/* img */}
-        <div className="col-span-2 w-full h-screen relative  bg-cover bg-center py-10 lg:px-20 md:px-4 max-md:px-4 text-[#E0E3E3]">
-          {/* Overlay */}
-          <div className="absolute inset-0 bg-[#28413E] opacity-45"></div>
-
-          {/* content */}
-          <div className="relative z-20 flex flex-col justify-between max-md:justify-normal h-full pb-10">
-            <h2 className="font-bold">the.weather</h2>
-            <div className="flex max-md:flex-col  max-md:self-center max-md:mt-16">
-              <p className="lg:text-7xl font-medium md:text-6xl  self-end max-md:self-center max-md:text-5xl">
-                {weatherData.main.temp}°
-              </p>
-              <div className="font-medium self-end pl-4 max-md:self-center max-md:pl-0 max-md:text-center max-md:my-5">
-                <p className=" lg:text-4xl md:text-3xl max-md:text-2xl">
-                  {weatherData.name}
-                </p>
-              </div>
-              {/* Pass city prop to WeatherForHours */}
-              <CityTimeFetcher
-                lat={weatherData.coord.lat}
-                lng={weatherData.coord.lon}
-              />
-              {/* icon */}
-              <div className=" w-20 h-20 rounded-full self-end max-md:self-center ">
-                <img
-                  src={`https://openweathermap.org/img/wn/${weatherData?.weather[0]?.icon}@2x.png`}
-                  alt="Current Weather Icon"
-                  className=" w-full h-full bg-cover"
-                />
-              </div>
-            </div>
-          </div>
-        </div>
-
-        {/* content */}
-        <div className="bg-[#28413E] opacity-80 lg:pl-10 md:pl-5 max-md:pl-10">
-          <div className="">
-            {/* Search part  */}
-            <div className=" grid grid-cols-8 gap-8 h-20">
-              <input
-                type="text"
-                placeholder="Another Location"
-                value={city || ""}
-                onChange={(e) => setCity(e.target.value)}
-                className=" search-input col-span-6 h-10 place-self-end w-full focus:outline-none bg-transparent border-b border-[#9EA7A6] text-[#E0E3E3] font-medium  "
-              />
-              <button
-                onClick={handleSearch}
-                className="bg-[#718583] col-span-2"
-              >
-                <i className="fas fa-search text-[#090F0E] text-xl"></i>
-              </button>
-            </div>
-
-            {/* cities */}
-            <PredefinedCities
-              handlePredefinedCityClick={handlePredefinedCityClick}
-            />
-
-            {/* Weather details */}
-            <div className="pt-10 mr-10  border-b border-[#9EA7A6]  ">
-              <h2 className="text-[#E0E3E3] font-medium text-lg pb-8">
-                Weather Details
-              </h2>
-              <p className="text-[#979fa1] pb-7  text-md flex justify-between font-medium">
-                Cloudy:
-                <span className="text-[#E0E3E3]">
-                  {weatherData.clouds.all}%
-                </span>
-              </p>
-              <p className="text-[#979fa1] pb-7  text-md flex justify-between font-medium">
-                Humidity:
-                <span className="text-[#E0E3E3]">
-                  {weatherData.main.humidity}%
-                </span>
-              </p>
-              <p className="text-[#979fa1] pb-7  text-md flex justify-between font-medium">
-                Wind:
-                <span className="text-[#E0E3E3]">
-                  {weatherData.wind.speed} m/s
-                </span>
-              </p>
-              <p className="text-[#979fa1] pb-7  text-md flex justify-between font-medium">
-                Description:
-                <span className="text-[#E0E3E3]">
-                  {weatherData.weather[0].description}
-                </span>
-              </p>
-            </div>
-          </div>
-        </div>
-        {/* Pass city prop to WeatherForDays */}
-        <WeatherForDays city={weatherData.name} />
-        {/* Pass city prop to WeatherForHours */}
-        <WeatherForHours city={weatherData.name} />
-        {/* Pass  prop to CityMap */}
-        <CityMap
-          lat={weatherData.coord.lat}
-          lng={weatherData.coord.lon}
-        
-        />
-      </div>
-    );
-  }
   return (
-    <div>
-      {error && <p>{error}</p>}
-      <h2>Loading...</h2>
-    </div>
+    <WeatherDashboardDisplayed
+      weatherData={weatherData}
+      city={city}
+      setCity={setCity}
+      handleSearch={handleSearch}
+      handlePredefinedCityClick={handlePredefinedCityClick}
+      error={error}
+    />
   );
 };
 

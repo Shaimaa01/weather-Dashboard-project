@@ -51,9 +51,9 @@ const WeatherForDays = ({ city }) => {
         <div className="flex justify-between items-center py-1  ">
           <p className="min-w-[63px] text-gray-500 ">{dayOfWeek}</p>
           <div className="flex items-center justify-start   w-[142px] ">
-            <div>
-              <WeatherIcon iconCode={iconCode} />
-            </div>
+            
+              <WeatherIcon iconCode={iconCode} className="w-20 h-20 m-auto" />
+           
             <p className="font-medium pr-4">{weatherDescription}</p>
           </div>
           <p className="font-medium   min-w-[63px] text-right">
@@ -65,7 +65,7 @@ const WeatherForDays = ({ city }) => {
     };
 
     return (
-      <div className="bg-gray-800  rounded-3xl my-10 mx-10 text-slate-300 px-8 py-10 ">
+      <div className="bg-gray-800  rounded-3xl  text-slate-300 px-8 py-10 ">
         {error && <p>{error}</p>}
         <h2 className="text-gray-500 uppercase font-bold tracking-tight  text-sm">
           7-Dayforcast

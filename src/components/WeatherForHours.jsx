@@ -35,7 +35,7 @@ const WeatherForHours = ({ city }) => {
     const hoursData = forecastData?.list.slice(0, 6) || [];
 
     return (
-      <div className="bg-gray-800  rounded-3xl my-10 mx-10 text-slate-300 p-8">
+      <div className="bg-gray-800  rounded-3xl  text-slate-300 p-6">
         {error && <div>Error: {error}</div>}
         <h3 className="text-gray-500  uppercase font-bold tracking-tight pb-4 text-sm">
           today&apos;sForecast
@@ -44,11 +44,11 @@ const WeatherForHours = ({ city }) => {
           {hoursData.length > 0 ? (
             hoursData.map((hour, index) => (
               <div className="borderRight " key={index}>
-                <p className="text-gray-500 font-medium">
+                <p className="text-gray-500 font-bold">
                   {convertTo12HourFormat(hour.dt_txt)}
                 </p>
-                <WeatherIcon iconCode={hour.weather[0].icon} />
-                <p className="font-semibold text-2xl">
+                <WeatherIcon iconCode={hour.weather[0].icon} className="w-20 h-20 m-auto" />
+                <p className="font-bold text-2xl">
                   {Math.round(hour.main.temp)}°
                 </p>
               </div>

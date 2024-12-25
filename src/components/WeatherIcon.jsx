@@ -1,5 +1,4 @@
 /* eslint-disable react/prop-types */
-
 import daySunny from "../assets/icons/sunny.svg";
 import nightClear from "../assets/icons/night.svg";
 import dayCloudy from "../assets/icons/cloudy-day.svg";
@@ -36,10 +35,12 @@ const weatherIconMap = {
 
 const defaultIcon = cloudy;
 
-const WeatherIcon = ({ iconCode }) => {
+const WeatherIcon = ({ iconCode, className = "" }) => {
   const iconSrc = weatherIconMap[iconCode] || defaultIcon;
 
-  return <img src={iconSrc} alt={iconCode} className="w-20 h-20 m-auto" />;
+  return <img src={iconSrc} alt={iconCode} className={`${className}`} />;
 };
 
 export default WeatherIcon;
+
+
