@@ -48,15 +48,15 @@ const WeatherForDays = ({ city }) => {
 
       // Return the formatted string
       return (
-        <div className="flex justify-between items-center py-1  ">
-          <p className="min-w-[63px] text-gray-500 ">{dayOfWeek}</p>
-          <div className="flex items-center justify-start   w-[142px] ">
-            
-              <WeatherIcon iconCode={iconCode} className="w-20 h-20 m-auto" />
-           
+        <div className="flex justify-between items-center py-2  ">
+          <p className="min-w-[63px] text-gray-500 font-medium ">{dayOfWeek}</p>
+
+          <div className="flex items-center justify-start  w-[142px] mx-4">
+            <WeatherIcon iconCode={iconCode} className="w-20 h-20 " />
             <p className="font-medium pr-4">{weatherDescription}</p>
           </div>
-          <p className="font-medium   min-w-[63px] text-right">
+
+          <p className="font-medium  min-w-[63px] text-right">
             {tempMin}
             <span className="text-gray-500">/{tempMax}</span>
           </p>
@@ -65,7 +65,7 @@ const WeatherForDays = ({ city }) => {
     };
 
     return (
-      <div className="bg-gray-800  rounded-3xl  text-slate-300 px-8 py-10 ">
+      <div className="bg-gray-800 rounded-3xl  text-slate-300 px-6 pt-8 pb-0 self-end  ">
         {error && <p>{error}</p>}
         <h2 className="text-gray-500 uppercase font-bold tracking-tight  text-sm">
           7-Dayforcast
@@ -79,7 +79,9 @@ const WeatherForDays = ({ city }) => {
             ))}
           </ul>
         ) : (
-          <p><i className="fas fa-spinner fa-spin"></i> Loading...</p>
+          <p>
+            <i className="fas fa-spinner fa-spin"></i> Loading...
+          </p>
         )}
       </div>
     );
@@ -87,5 +89,3 @@ const WeatherForDays = ({ city }) => {
 };
 
 export default WeatherForDays;
-
-

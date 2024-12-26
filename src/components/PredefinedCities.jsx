@@ -8,14 +8,14 @@ const PredefinedCities = ({ handlePredefinedCityClick }) => {
   return (
     <>
       <div
-        className=" pt-5 pb-5  border-b border-[#9EA7A6] overflow-y-auto w-full"
-        style={{ maxHeight: "300px" }}
+        className=" overflow-y-auto w-full max-h-96 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full  scrollbar-thumb-gray-500  scrollbar-track-gray-800"
+        
       >
         {predefinedCities.map((predefinedCity) => (
           <button
             key={predefinedCity}
             onClick={() => handlePredefinedCityClick(predefinedCity)}
-            className="block text-[#979fa1] font-semibold text-md hover:bg-[#71858317] hover:text-[#E0E3E3] rounded w-full text-start py-3 my-1"
+            className="block text-gray-500 font-semibold text-md hover:bg-[#71858317] hover:text-slate-300 rounded w-full text-start py-3 my-1 pl-4"
           >
             {predefinedCity}
           </button>

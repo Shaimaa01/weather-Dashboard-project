@@ -37,18 +37,18 @@ const WeatherForHours = ({ city }) => {
     return (
       <div className="bg-gray-800  rounded-3xl  text-slate-300 p-6">
         {error && <div>Error: {error}</div>}
-        <h3 className="text-gray-500  uppercase font-bold tracking-tight pb-4 text-sm">
+        <h3 className="text-gray-500  uppercase font-bold tracking-tight pb-4 text-sm ">
           today&apos;sForecast
         </h3>
         <div className="grid grid-cols-6  text-center justify-items-stretch content-end">
           {hoursData.length > 0 ? (
             hoursData.map((hour, index) => (
-              <div className="borderRight " key={index}>
-                <p className="text-gray-500 font-bold">
+              <div className="borderRight px-1 " key={index}>
+                <p className="text-gray-500 font-bold max-xl:font-medium ">
                   {convertTo12HourFormat(hour.dt_txt)}
                 </p>
-                <WeatherIcon iconCode={hour.weather[0].icon} className="w-20 h-20 m-auto" />
-                <p className="font-bold text-2xl">
+                <WeatherIcon iconCode={hour.weather[0].icon} className="w-20 h-20 m-auto max-xl:w-16 max-xl:h-16 max-sm:w-10 max-sm:h-10" />
+                <p className="font-bold text-2xl max-xl:text-xl">
                   {Math.round(hour.main.temp)}°
                 </p>
               </div>

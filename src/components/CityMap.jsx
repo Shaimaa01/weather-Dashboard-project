@@ -15,10 +15,10 @@ const CityMap = ({ lat, lng }) => {
 
   return (
     <div>
-      <div className="h-96 w-4/5 m-auto my-4">
+      <div className="h-96 w-full m-auto mt-8 shadow-md ">
         <MapContainer
           center={position}
-          zoom={13}
+          zoom={11}
           scrollWheelZoom={true}
           style={{ width: "100%", height: "100%" }}
         >
