@@ -1,9 +1,14 @@
 /* App.css */
 .custom-border li:not(:last-child) {
-    border-bottom: 1px solid rgb(55 65 81); 
-  }
-  
+  border-bottom: 1px solid rgb(55 65 81);
+}
+.custom-border-light li:not(:last-child) {
+  border-bottom: 1px solid #c4ccd9;
+}
+
 .borderRight:not(:last-child) {
-  border-right: 1px solid rgb(55 65 81); 
-} 
- 
+  border-right: 1px solid rgb(55 65 81);
+}
+.borderRight-light:not(:last-child) {
+  border-right: 1px solid #c4ccd9;
+}

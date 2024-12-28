@@ -15,7 +15,7 @@ const PredefinedCities = ({ handlePredefinedCityClick }) => {
           <button
             key={predefinedCity}
             onClick={() => handlePredefinedCityClick(predefinedCity)}
-            className="block text-gray-500 font-semibold text-md hover:bg-[#71858317] hover:text-slate-300 rounded w-full text-start py-3 my-1 pl-4"
+            className="block text-gray-500 font-semibold text-md hover:bg-[#71858317] hover:text-sky-300 rounded w-full text-start py-3 my-1 pl-4"
           >
             {predefinedCity}
           </button>

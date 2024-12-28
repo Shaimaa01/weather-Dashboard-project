@@ -5,7 +5,8 @@ import { getForecast } from "../services/WeatherForecast";
 import WeatherIcon from "./WeatherIcon";
 import "../App.css";
 
-const WeatherForDays = ({ city }) => {
+const WeatherForDays = ({ city, isDarkMode }) => {
+  console.log(isDarkMode);
   if (city) {
     const [forecastData, setForecastData] = useState(null);
     const [error, setError] = useState("");
@@ -65,17 +66,19 @@ const WeatherForDays = ({ city }) => {
     };
 
     return (
-      <div className="bg-gray-800 rounded-3xl  text-slate-300 px-6 pt-8 pb-0 self-end  ">
+      <>
         {error && <p>{error}</p>}
-        <h2 className="text-gray-500 uppercase font-bold tracking-tight  text-sm">
-          7-Dayforcast
+        <h2 className="text-gray-500 uppercase font-bold tracking-tight text-sm">
+          7-Day forecast
         </h2>
-        {forecastData ? (
-          <ul className=" custom-border">
+        {forecastData  ? (
+          <ul
+            className={`${
+              isDarkMode ? "custom-border" : "custom-border-light"
+            }`}
+          >
             {getUniqueForecast(forecastData).map((day, index) => (
-              <li className="" key={index}>
-                {formatForecast(day, index === 0)}
-              </li>
+              <li key={index}>{formatForecast(day, index === 0)}</li>
             ))}
           </ul>
         ) : (
@@ -83,9 +86,8 @@ const WeatherForDays = ({ city }) => {
             <i className="fas fa-spinner fa-spin"></i> Loading...
           </p>
         )}
-      </div>
+      </>
     );
   }
 };
-
 export default WeatherForDays;

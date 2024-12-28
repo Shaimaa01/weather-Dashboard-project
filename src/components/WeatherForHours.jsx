@@ -5,7 +5,7 @@ import { getForecast } from "../services/WeatherForecast";
 import WeatherIcon from "./WeatherIcon";
 import "../App.css";
 
-const WeatherForHours = ({ city }) => {
+const WeatherForHours = ({ city, isDarkMode }) => {
   if (city) {
     const [forecastData, setForecastData] = useState(null);
     const [error, setError] = useState("");
@@ -35,7 +35,7 @@ const WeatherForHours = ({ city }) => {
     const hoursData = forecastData?.list.slice(0, 6) || [];
 
     return (
-      <div className="bg-gray-800  rounded-3xl  text-slate-300 p-6">
+      <>
         {error && <div>Error: {error}</div>}
         <h3 className="text-gray-500  uppercase font-bold tracking-tight pb-4 text-sm ">
           today&apos;sForecast
@@ -43,11 +43,19 @@ const WeatherForHours = ({ city }) => {
         <div className="grid grid-cols-6  text-center justify-items-stretch content-end">
           {hoursData.length > 0 ? (
             hoursData.map((hour, index) => (
-              <div className="borderRight px-1 " key={index}>
+              <div
+                className={`${
+                  isDarkMode ? "borderRight" : "borderRight-light"
+                } px-1 `}
+                key={index}
+              >
                 <p className="text-gray-500 font-bold max-xl:font-medium ">
                   {convertTo12HourFormat(hour.dt_txt)}
                 </p>
-                <WeatherIcon iconCode={hour.weather[0].icon} className="w-20 h-20 m-auto max-xl:w-16 max-xl:h-16 max-sm:w-10 max-sm:h-10" />
+                <WeatherIcon
+                  iconCode={hour.weather[0].icon}
+                  className="w-20 h-20 m-auto max-xl:w-16 max-xl:h-16 max-sm:w-10 max-sm:h-10"
+                />
                 <p className="font-bold text-2xl max-xl:text-xl">
                   {Math.round(hour.main.temp)}°
                 </p>
@@ -59,7 +67,7 @@ const WeatherForHours = ({ city }) => {
             </p>
           )}
         </div>
-      </div>
+      </>
     );
   }
 };
