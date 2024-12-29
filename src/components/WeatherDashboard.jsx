@@ -1,8 +1,9 @@
+/* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
 import { getWeather } from "../services/weatherService.js";
 import WeatherDashboardDisplayed from "./WeatherDashboardDisplayed.jsx";
 
-const WeatherDashboard = () => {
+const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState("");
@@ -115,7 +116,7 @@ const WeatherDashboard = () => {
     }
   }, []);
 
-  console.log(weatherData)
+  console.log(weatherData);
 
   return (
     <WeatherDashboardDisplayed
@@ -125,6 +126,8 @@ const WeatherDashboard = () => {
       handleSearch={handleSearch}
       handlePredefinedCityClick={handlePredefinedCityClick}
       error={error}
+      isDarkMode={isDarkMode}
+      toggleDarkMode={toggleDarkMode}
     />
   );
 };

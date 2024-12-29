@@ -14,17 +14,18 @@ const WeatherDashboardDisplayed = ({
   handleSearch,
   handlePredefinedCityClick,
   error,
+  isDarkMode,
+  toggleDarkMode,
 }) => {
   const [visibleContent, setVisibleContent] = useState("WeatherForHours");
-  const [isDarkMode, setIsDarkMode] = useState(true);
+
 
   // Toggle between content and null
   const handleIconClick = (content) => {
     setVisibleContent((prev) => (prev === content ? null : content));
   };
 
-  // Toggle dark and white mode
-  const toggleDarkMode = () => setIsDarkMode((prev) => !prev);
+
 
   if (weatherData) {
     return (
@@ -42,7 +43,7 @@ const WeatherDashboardDisplayed = ({
             }   rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2  max-sm:mb-4 max-sm:justify-evenly  max-sm:bg-transparent`}
           >
             <i className="fa-solid fa-umbrella text-sky-300  p-2 rounded-lg mb-5 max-sm:m-0"></i>
-          
+
             {/* icon to control weather */}
             <div
               className={`text-center cursor-pointer transition-colors ${
@@ -85,7 +86,7 @@ const WeatherDashboardDisplayed = ({
             <div
               className={`text-center cursor-pointer transition-colors ${
                 visibleContent === "CityMap"
-                  ?isDarkMode
+                  ? isDarkMode
                     ? "text-slate-300"
                     : "text-gray-900"
                   : "text-gray-500"
@@ -103,11 +104,15 @@ const WeatherDashboardDisplayed = ({
             {/* icon to conrtol mode */}
             <div
               className={`text-center cursor-pointer transition-colors duration-300 ${
-                isDarkMode ? "text-gray-500" : "text-gray-500"
-              }`}
+                isDarkMode ? "text-gray-500 " : "text-yellow-500"
+              } `}
               onClick={toggleDarkMode}
             >
-              <i className="fa-solid fa-moon"></i>
+              {isDarkMode ? (
+                <i className="fa-solid fa-moon  text-gray-500 "></i>
+              ) : (
+                <i className="fa-solid fa-sun text-yellow-500"></i>
+              )}
               <p className="text-sm font-medium ">
                 {isDarkMode ? "Dark" : "Light"}
               </p>
