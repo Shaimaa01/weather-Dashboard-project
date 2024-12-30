@@ -1,16 +1,19 @@
 /* eslint-disable react/prop-types */
 import FetchCities from "../services/FetchCityNames";
+import SidebarMenu from "./SidebarMenu";
 
-const PredefinedCities = ({ handlePredefinedCityClick }) => {
+const PredefinedCities = ({
+  handlePredefinedCityClick,
+  isDarkMode,
+  toggleDarkMode,
+}) => {
   // List of predefined cities
   const predefinedCities = FetchCities();
 
   return (
-    <>
-      <div
-        className=" overflow-y-auto w-full max-h-96 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full  scrollbar-thumb-gray-500  scrollbar-track-gray-800"
-        
-      >
+    <div className=" sm:flex gap-6 justify-between  pb-6   ">
+      <SidebarMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+      <div className=" overflow-y-auto w-full max-h-96 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full  scrollbar-thumb-gray-500  scrollbar-track-gray-800">
         {predefinedCities.map((predefinedCity) => (
           <button
             key={predefinedCity}
@@ -21,7 +24,7 @@ const PredefinedCities = ({ handlePredefinedCityClick }) => {
           </button>
         ))}
       </div>
-    </>
+    </div>
   );
 };
 

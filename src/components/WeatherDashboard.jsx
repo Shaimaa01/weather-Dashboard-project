@@ -2,11 +2,17 @@
 import { useState, useEffect } from "react";
 import { getWeather } from "../services/weatherService.js";
 import WeatherDashboardDisplayed from "./WeatherDashboardDisplayed.jsx";
+import { Routes, Route, useLocation } from "react-router-dom";
+import CityMap from "./CityMap.jsx";
+import PredefinedCities from "./PredefinedCities.jsx";
 
 const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState("");
+
+  // Get current location
+  const location = useLocation();
 
   //   to handle predfined citys
   const handlePredefinedCityClick = async (selectedCity) => {
@@ -119,16 +125,49 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
   console.log(weatherData);
 
   return (
-    <WeatherDashboardDisplayed
-      weatherData={weatherData}
-      city={city}
-      setCity={setCity}
-      handleSearch={handleSearch}
-      handlePredefinedCityClick={handlePredefinedCityClick}
-      error={error}
-      isDarkMode={isDarkMode}
-      toggleDarkMode={toggleDarkMode}
-    />
+    <>
+      {/* Show WeatherDashboardDisplayed only on the home route */}
+      {location.pathname === "/home" && (
+        <WeatherDashboardDisplayed
+          weatherData={weatherData}
+          city={city}
+          setCity={setCity}
+          handleSearch={handleSearch}
+          handlePredefinedCityClick={handlePredefinedCityClick}
+          error={error}
+          isDarkMode={isDarkMode}
+          toggleDarkMode={toggleDarkMode}
+        />
+      )}
+
+      {/* Define Routes */}
+      <Routes>
+        <Route
+          path="cities"
+          element={
+            <PredefinedCities
+              handlePredefinedCityClick={handlePredefinedCityClick}
+              isDarkMode={isDarkMode}
+              toggleDarkMode={toggleDarkMode}
+            />
+          }
+        />
+
+        <Route
+          path="map"
+          element={
+            weatherData ? (
+              <CityMap
+                lat={weatherData.coord.lat}
+                lng={weatherData.coord.lon}
+              />
+            ) : (
+              <div>Loading map or no data available</div>
+            )
+          }
+        />
+      </Routes>
+    </>
   );
 };
 

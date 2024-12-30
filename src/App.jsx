@@ -9,28 +9,29 @@ import {
 import StartPage from "./components/StartPage";
 import { useState, useEffect } from "react";
 
+
 function App() {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState();
 
-
+  // JSON.parse(localStorage.getItem("darkMode")) || false
   // Load user's preference from localStorage on mount
   useEffect(() => {
     const savedPreference = localStorage.getItem("darkMode");
     if (savedPreference !== null) {
       try {
-        setIsDarkMode(JSON.parse(savedPreference)); 
+        setIsDarkMode(JSON.parse(savedPreference));
       } catch (error) {
         console.error("Error parsing dark mode preference:", error);
       }
-    }else{
-      setIsDarkMode(true)
+    } else {
+      setIsDarkMode(true);
     }
   }, []);
 
   // Update localStorage whenever isDarkMode changes
   useEffect(() => {
-    localStorage.setItem("darkMode", JSON.stringify(isDarkMode)); // Store boolean as a string
+    localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
   }, [isDarkMode]);
 
   // Toggle dark and white mode
@@ -66,7 +67,7 @@ function App() {
           }
         />
         <Route
-          path="/home"
+          path="/home/*"  // Allow nested routes under /home
           element={
             <WeatherDashboard
               isDarkMode={isDarkMode}
@@ -74,6 +75,7 @@ function App() {
             />
           }
         />
+      
       </Routes>
     </Router>
   );

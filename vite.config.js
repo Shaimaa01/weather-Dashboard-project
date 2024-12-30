@@ -6,6 +6,7 @@ export default defineConfig({
   plugins: [react()],
   base: "/",
   server: {
+    historyApiFallback: true,
     port: 5173,
     proxy: {
       // Proxy for TimeZoneDB API

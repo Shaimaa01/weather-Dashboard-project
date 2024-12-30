@@ -1,32 +1,19 @@
 /* eslint-disable react/prop-types */
-import PredefinedCities from "./PredefinedCities.jsx";
 import CityTimeFetcher from "./CityTimeFetcher.jsx";
+import SidebarMenu from "./SidebarMenu.jsx";
 import WeatherForDays from "./WeatherForDays.jsx";
 import WeatherForHours from "./WeatherForHours.jsx";
-import CityMap from "./CityMap.jsx";
 import WeatherIcon from "./WeatherIcon.jsx";
-import { useState } from "react";
 
 const WeatherDashboardDisplayed = ({
   weatherData,
   city,
   setCity,
   handleSearch,
-  handlePredefinedCityClick,
   error,
   isDarkMode,
   toggleDarkMode,
 }) => {
-  const [visibleContent, setVisibleContent] = useState("WeatherForHours");
-
-
-  // Toggle between content and null
-  const handleIconClick = (content) => {
-    setVisibleContent((prev) => (prev === content ? null : content));
-  };
-
-
-
   if (weatherData) {
     return (
       // container
@@ -37,87 +24,10 @@ const WeatherDashboardDisplayed = ({
       >
         <div className=" sm:flex gap-6 justify-between  pb-6   ">
           {/* First column */}
-          <div
-            className={` ${
-              isDarkMode ? "bg-gray-800" : "bg-gray-200"
-            }   rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2  max-sm:mb-4 max-sm:justify-evenly  max-sm:bg-transparent`}
-          >
-            <i className="fa-solid fa-umbrella text-sky-300  p-2 rounded-lg mb-5 max-sm:m-0"></i>
-
-            {/* icon to control weather */}
-            <div
-              className={`text-center cursor-pointer transition-colors ${
-                visibleContent === "WeatherForHours"
-                  ? isDarkMode
-                    ? "text-slate-300"
-                    : "text-gray-900"
-                  : "text-gray-500"
-              }`}
-            >
-              <i
-                className="fa-solid fa-cloud-moon-rain"
-                onClick={() => {
-                  handleIconClick("WeatherForHours");
-                }}
-              ></i>
-              <p className="text-sm font-medium ">Weather</p>
-            </div>
-
-            {/* icon to control cities */}
-            <div
-              className={`text-center cursor-pointer transition-colors ${
-                visibleContent === "PredefinedCities"
-                  ? isDarkMode
-                    ? "text-slate-300"
-                    : "text-gray-900"
-                  : "text-gray-500"
-              }`}
-            >
-              <i
-                className="fa-solid fa-list"
-                onClick={() => {
-                  handleIconClick("PredefinedCities");
-                }}
-              ></i>
-              <p className="text-sm font-medium ">Cities</p>
-            </div>
-
-            {/* icon to control Map */}
-            <div
-              className={`text-center cursor-pointer transition-colors ${
-                visibleContent === "CityMap"
-                  ? isDarkMode
-                    ? "text-slate-300"
-                    : "text-gray-900"
-                  : "text-gray-500"
-              }`}
-            >
-              <i
-                className="fa-solid fa-map"
-                onClick={() => {
-                  handleIconClick("CityMap");
-                }}
-              ></i>
-              <p className="text-sm font-medium ">Map</p>
-            </div>
-
-            {/* icon to conrtol mode */}
-            <div
-              className={`text-center cursor-pointer transition-colors duration-300 ${
-                isDarkMode ? "text-gray-500 " : "text-yellow-500"
-              } `}
-              onClick={toggleDarkMode}
-            >
-              {isDarkMode ? (
-                <i className="fa-solid fa-moon  text-gray-500 "></i>
-              ) : (
-                <i className="fa-solid fa-sun text-yellow-500"></i>
-              )}
-              <p className="text-sm font-medium ">
-                {isDarkMode ? "Dark" : "Light"}
-              </p>
-            </div>
-          </div>
+          <SidebarMenu
+            isDarkMode={isDarkMode}
+            toggleDarkMode={toggleDarkMode}
+          />
 
           {/* Second colmun */}
           <div className="w-full">
@@ -138,62 +48,43 @@ const WeatherDashboardDisplayed = ({
             </div>
 
             {/* container for temp , data , city ,icon */}
-            {visibleContent === "WeatherForHours" && (
-              <div className="flex justify-between  m-5">
-                <div className="flex flex-col justify-between">
-                  <div className="">
-                    <p className="font-bold text-3xl ">{weatherData.name}</p>
-                    <div className="text-gray-500 font-semibold">
-                      <CityTimeFetcher
-                        lat={weatherData.coord.lat}
-                        lng={weatherData.coord.lon}
-                      />
-                    </div>
+
+            <div className="flex justify-between  m-5">
+              <div className="flex flex-col justify-between">
+                <div className="">
+                  <p className="font-bold text-3xl ">{weatherData.name}</p>
+                  <div className="text-gray-500 font-semibold">
+                    <CityTimeFetcher
+                      lat={weatherData.coord.lat}
+                      lng={weatherData.coord.lon}
+                    />
                   </div>
-                  <p className="font-bold text-5xl">
-                    {Math.round(weatherData.main.temp)}°
-                  </p>
                 </div>
-
-                {/* icon */}
-
-                <WeatherIcon
-                  iconCode={weatherData.weather[0].icon}
-                  className="w-40 h-40 my-auto "
-                />
+                <p className="font-bold text-5xl">
+                  {Math.round(weatherData.main.temp)}°
+                </p>
               </div>
-            )}
+
+              {/* icon */}
+
+              <WeatherIcon
+                iconCode={weatherData.weather[0].icon}
+                className="w-40 h-40 my-auto "
+              />
+            </div>
 
             {/* hours forcast */}
-            {visibleContent === "WeatherForHours" && (
-              <div
-                className={`${
-                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                } rounded-3xl  p-6`}
-              >
-                <WeatherForHours
-                  city={weatherData.name}
-                  isDarkMode={isDarkMode}
-                />
-              </div>
-            )}
 
-            {/* cities */}
-            {visibleContent === "PredefinedCities" && (
-              <div className="mt-8 shadow-md shadow-gray-900/50">
-                <PredefinedCities
-                  handlePredefinedCityClick={handlePredefinedCityClick}
-                />
-              </div>
-            )}
-
-            {/* CityMap */}
-            {visibleContent === "CityMap" && (
-              <CityMap
-                lat={weatherData.coord.lat}
-                lng={weatherData.coord.lon}
+            <div
+              className={`${
+                isDarkMode ? "bg-gray-800" : "bg-gray-200"
+              } rounded-3xl  p-6`}
+            >
+              <WeatherForHours
+                city={weatherData.name}
+                isDarkMode={isDarkMode}
               />
-            )}
+            </div>
 
             {/* Weather details */}
             <div
@@ -286,3 +177,5 @@ const WeatherDashboardDisplayed = ({
 };
 
 export default WeatherDashboardDisplayed;
+
+
