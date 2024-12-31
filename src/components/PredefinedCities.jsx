@@ -1,28 +1,182 @@
 /* eslint-disable react/prop-types */
-import FetchCities from "../services/FetchCityNames";
 import SidebarMenu from "./SidebarMenu";
+import { useEffect, useState } from "react";
+import { getWeather } from "../services/weatherService";
+import WeatherIcon from "./WeatherIcon";
+import CityTimeFetcher from "./CityTimeFetcher";
+import WeatherForThreeHours from "./WeatherForThreeHours";
+import WeatherForThreeDays from "./WeatherForThreeDays";
 
 const PredefinedCities = ({
   handlePredefinedCityClick,
   isDarkMode,
   toggleDarkMode,
+  city,
+  setCity,
+  handleSearch,
+  predefinedCities,
+  weatherData,
 }) => {
-  // List of predefined cities
-  const predefinedCities = FetchCities();
+  const [cityWeatherData, setCityWeatherData] = useState({});
+
+  useEffect(() => {
+    const fetchCityWeather = async () => {
+      for (const city of predefinedCities) {
+        try {
+          const data = await getWeather(city);
+          setCityWeatherData((prevData) => ({
+            ...prevData,
+            [city]: {
+              temp: data.main.temp,
+              icon: data.weather[0].icon,
+              lat: data.coord.lat,
+              lon: data.coord.lon,
+            },
+          }));
+        } catch (error) {
+          console.error(`Failed to fetch weather for ${city}:`, error);
+        }
+      }
+    };
+
+    fetchCityWeather();
+  }, [predefinedCities]);
 
   return (
-    <div className=" sm:flex gap-6 justify-between  pb-6   ">
-      <SidebarMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
-      <div className=" overflow-y-auto w-full max-h-96 scrollbar-thin scrollbar-thumb-rounded-full scrollbar-track-rounded-full  scrollbar-thumb-gray-500  scrollbar-track-gray-800">
-        {predefinedCities.map((predefinedCity) => (
-          <button
-            key={predefinedCity}
-            onClick={() => handlePredefinedCityClick(predefinedCity)}
-            className="block text-gray-500 font-semibold text-md hover:bg-[#71858317] hover:text-sky-300 rounded w-full text-start py-3 my-1 pl-4"
+    // container
+    <div
+      className={` ${
+        isDarkMode ? "bg-gray-950 text-slate-300" : "bg-slate-50 text-black"
+      }  min-h-screen p-6 `}
+    >
+      {/* child container */}
+      <div className=" sm:flex gap-6 justify-between  pb-6 min-h-screen ">
+        {/* First column */}
+        <SidebarMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
+
+        {/* Second colmun */}
+        <div className="flex-1">
+          {/* Search part  */}
+          <div className="flex">
+            <input
+              type="text"
+              placeholder="Search for cities"
+              value={city || ""}
+              onChange={(e) => setCity(e.target.value)}
+              className={` h-10 w-full focus:outline-none ${
+                isDarkMode ? "bg-gray-800" : "bg-gray-200"
+              }   font-medium text-sm pl-4 rounded-xl `}
+            />
+            <button onClick={handleSearch}>
+              <i className="fas fa-search text-sky-300 text-xl -ml-14"></i>
+            </button>
+          </div>
+
+          {/* cities part */}
+          {predefinedCities.map((city) => (
+            <div
+              key={city}
+              onClick={() => handlePredefinedCityClick(city)}
+              className=""
+            >
+              <div
+                className={`mt-4 flex justify-between items-center rounded-3xl px-6 py-1 hover:border-2 hover:border-sky-700 hover:bg-transparent transition duration-300 ${
+                  isDarkMode ? "bg-gray-800" : "bg-gray-200"
+                }`}
+              >
+                {cityWeatherData[city] && (
+                  <>
+                    <div className="flex items-center">
+                      {/* icon */}
+                      <WeatherIcon
+                        iconCode={cityWeatherData[city].icon}
+                        className="w-28 h-28 my-auto "
+                      />
+
+                      {/*City and Data */}
+                      <div className="ml-2">
+                        <p className="font-bold text-2xl pb-2">{city}</p>
+                        <p className="text-gray-500 font-semibold">
+                          <CityTimeFetcher
+                            lat={cityWeatherData[city].lat}
+                            lng={cityWeatherData[city].lon}
+                          />
+                        </p>
+                      </div>
+                    </div>
+
+                    {/* tempreture */}
+                    <p className="text-3xl font-semibold">
+                      {Math.round(cityWeatherData[city].temp)}°
+                    </p>
+                  </>
+                )}
+              </div>
+            </div>
+          ))}
+        </div>
+
+        {/* Third colmun */}
+        <div
+          className={` w-1/4 self-end  max-lg:hidden ${
+            isDarkMode ? " text-slate-300 " : "text-black "
+          }`}
+        >
+          {/* container for temp , data , city ,icon */}
+          {weatherData && (
+            <div
+              className={`flex justify-between py-8 border-b ${
+                isDarkMode ? "border-gray-700" : "border-slate-300"
+              } `}
+            >
+              <div className="flex flex-col justify-between ">
+                <div className="">
+                  <p className="font-bold text-3xl ">{weatherData.name}</p>
+                  <div className="text-gray-500 font-semibold">
+                    <CityTimeFetcher
+                      lat={weatherData.coord.lat}
+                      lng={weatherData.coord.lon}
+                    />
+                  </div>
+                </div>
+                <p className="font-bold text-5xl">
+                  {Math.round(weatherData.main.temp)}°
+                </p>
+              </div>
+
+              {/* icon */}
+
+              <WeatherIcon
+                iconCode={weatherData.weather[0].icon}
+                className="w-40 h-40 my-auto "
+              />
+            </div>
+          )}
+
+          {/* hours forcast */}
+          <div
+            className={` py-6 border-b ${
+              isDarkMode ? "border-gray-700" : "border-slate-300"
+            }`}
           >
-            {predefinedCity}
-          </button>
-        ))}
+            {weatherData && (
+              <WeatherForThreeHours
+                city={weatherData.name}
+                isDarkMode={isDarkMode}
+              />
+            )}
+          </div>
+
+          {/* days forcast */}
+          <div className={` pt-6 pb-0 max-lg:hidden `}>
+            {weatherData && (
+              <WeatherForThreeDays
+                city={weatherData.name}
+                isDarkMode={isDarkMode}
+              />
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );

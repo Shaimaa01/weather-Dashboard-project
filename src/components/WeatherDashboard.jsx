@@ -11,6 +11,16 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
   const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState("");
 
+  // List of predefined cities
+  const [predefinedCities, setPredefinedCities] = useState(
+    JSON.parse(localStorage.getItem("predefinedCities")) || [
+      "Cairo",
+      "Poland",
+      "Brazil",
+      "Antarctica",
+    ]
+  );
+
   // Get current location
   const location = useLocation();
 
@@ -60,6 +70,30 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
     return () => clearInterval(interval);
   });
 
+  // Function for Updating Cities
+  const updateCities = (newCity) => {
+    const updatedCities = JSON.parse(
+      localStorage.getItem("predefinedCities")
+    ) || ["Cairo", "Poland", "Brazil", "Antarctica"];
+
+    // Check if the city already exists in the predefined cities array
+    if (!updatedCities.includes(newCity)) {
+      // If there are already 4 cities, remove the first one
+      if (updatedCities.length >= 4) {
+        updatedCities.pop ();
+      }
+
+      // Add the new city to the array
+      updatedCities.unshift(newCity);
+
+      // update array of the citties 
+      setPredefinedCities(updatedCities)
+
+      // Save the updated cities list to localStorage
+      localStorage.setItem("predefinedCities", JSON.stringify(updatedCities));
+    }
+  };
+
   // Handle search and fetch new weather data
   const handleSearch = async () => {
     try {
@@ -71,11 +105,12 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
 
       saveToLocalStorage(data);
 
-      setCity("");
+      // Call updateCities to update the predefined cities list in localStorage
+      updateCities(city);
 
-      // eslint-disable-next-line no-unused-vars
+      setCity("");
     } catch (error) {
-      setError("City not found or API error");
+      setError(error.message);
     }
   };
 
@@ -133,7 +168,6 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
           city={city}
           setCity={setCity}
           handleSearch={handleSearch}
-          handlePredefinedCityClick={handlePredefinedCityClick}
           error={error}
           isDarkMode={isDarkMode}
           toggleDarkMode={toggleDarkMode}
@@ -149,6 +183,11 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
               handlePredefinedCityClick={handlePredefinedCityClick}
               isDarkMode={isDarkMode}
               toggleDarkMode={toggleDarkMode}
+              city={city}
+              setCity={setCity}
+              handleSearch={handleSearch}
+              predefinedCities= {predefinedCities}
+              weatherData={weatherData}
             />
           }
         />
@@ -160,6 +199,8 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
               <CityMap
                 lat={weatherData.coord.lat}
                 lng={weatherData.coord.lon}
+                isDarkMode={isDarkMode}
+                toggleDarkMode={toggleDarkMode}
               />
             ) : (
               <div>Loading map or no data available</div>

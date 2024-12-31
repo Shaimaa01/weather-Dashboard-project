@@ -35,14 +35,14 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
       {/* Cities Link */}
       <div
         className={`text-center cursor-pointer transition-colors ${
-          isActive("cities")
+          isActive("/home/cities")
             ? isDarkMode
               ? "text-slate-300"
               : "text-gray-900"
             : "text-gray-500"
         }`}
       >
-        <Link to="cities">
+        <Link to="/home/cities">
           <i className="fa-solid fa-list"></i>
           <p className="text-sm font-medium">Cities</p>
         </Link>
@@ -51,14 +51,14 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
       {/* Map Link */}
       <div
         className={`text-center cursor-pointer transition-colors ${
-          isActive("map")
+          isActive("/home/map")
             ? isDarkMode
               ? "text-slate-300"
               : "text-gray-900"
             : "text-gray-500"
         }`}
       >
-        <Link to="map">
+        <Link to="/home/map">
           <i className="fa-solid fa-map"></i>
           <p className="text-sm font-medium">Map</p>
         </Link>
