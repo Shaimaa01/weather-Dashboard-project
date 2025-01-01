@@ -80,14 +80,14 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
     if (!updatedCities.includes(newCity)) {
       // If there are already 4 cities, remove the first one
       if (updatedCities.length >= 4) {
-        updatedCities.pop ();
+        updatedCities.pop();
       }
 
       // Add the new city to the array
       updatedCities.unshift(newCity);
 
-      // update array of the citties 
-      setPredefinedCities(updatedCities)
+      // update array of the citties
+      setPredefinedCities(updatedCities);
 
       // Save the updated cities list to localStorage
       localStorage.setItem("predefinedCities", JSON.stringify(updatedCities));
@@ -186,7 +186,7 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
               city={city}
               setCity={setCity}
               handleSearch={handleSearch}
-              predefinedCities= {predefinedCities}
+              predefinedCities={predefinedCities}
               weatherData={weatherData}
             />
           }
@@ -201,6 +201,9 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
                 lng={weatherData.coord.lon}
                 isDarkMode={isDarkMode}
                 toggleDarkMode={toggleDarkMode}
+                city={city}
+                setCity={setCity}
+                handleSearch={handleSearch}
               />
             ) : (
               <div>Loading map or no data available</div>

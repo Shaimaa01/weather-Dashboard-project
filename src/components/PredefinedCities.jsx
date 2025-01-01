@@ -47,10 +47,10 @@ const PredefinedCities = ({
     <div
       className={` ${
         isDarkMode ? "bg-gray-950 text-slate-300" : "bg-slate-50 text-black"
-      }  min-h-screen p-6 `}
+      }  min-h-screen p-6 pb-0`}
     >
       {/* child container */}
-      <div className=" sm:flex gap-6 justify-between  pb-6 min-h-screen ">
+      <div className=" sm:flex gap-6 justify-between pb-10  min-h-screen ">
         {/* First column */}
         <SidebarMenu isDarkMode={isDarkMode} toggleDarkMode={toggleDarkMode} />
 
@@ -96,12 +96,12 @@ const PredefinedCities = ({
                       {/*City and Data */}
                       <div className="ml-2">
                         <p className="font-bold text-2xl pb-2">{city}</p>
-                        <p className="text-gray-500 font-semibold">
+                        <div className="text-gray-500 font-semibold">
                           <CityTimeFetcher
                             lat={cityWeatherData[city].lat}
                             lng={cityWeatherData[city].lon}
                           />
-                        </p>
+                        </div>
                       </div>
                     </div>
 
@@ -125,7 +125,7 @@ const PredefinedCities = ({
           {/* container for temp , data , city ,icon */}
           {weatherData && (
             <div
-              className={`flex justify-between py-8 border-b ${
+              className={`flex justify-between pb-4 border-b ${
                 isDarkMode ? "border-gray-700" : "border-slate-300"
               } `}
             >
@@ -155,7 +155,7 @@ const PredefinedCities = ({
 
           {/* hours forcast */}
           <div
-            className={` py-6 border-b ${
+            className={` py-4 border-b ${
               isDarkMode ? "border-gray-700" : "border-slate-300"
             }`}
           >
@@ -168,7 +168,7 @@ const PredefinedCities = ({
           </div>
 
           {/* days forcast */}
-          <div className={` pt-6 pb-0 max-lg:hidden `}>
+          <div className={` pt-4 pb-0 max-lg:hidden `}>
             {weatherData && (
               <WeatherForThreeDays
                 city={weatherData.name}

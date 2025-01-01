@@ -53,11 +53,11 @@ const WeatherForThreeDays = ({ city, isDarkMode }) => {
           <p className="min-w-[63px] text-gray-500 font-medium ">{dayOfWeek}</p>
 
           <div className="flex items-center justify-start  w-[142px] mx-4">
-            <WeatherIcon iconCode={iconCode} className="w-20 h-20 " />
+            <WeatherIcon iconCode={iconCode} className="w-16 h-16 " />
             <p className="font-medium pr-4">{weatherDescription}</p>
           </div>
 
-          <p className="font-medium  min-w-[63px] text-right">
+          <p className="font-medium  min-w-[63px] text-right ">
             {tempMin}
             <span className="text-gray-500">/{tempMax}</span>
           </p>

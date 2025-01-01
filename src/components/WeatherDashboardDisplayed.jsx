@@ -23,7 +23,7 @@ const WeatherDashboardDisplayed = ({
         }  min-h-screen p-6 `}
       >
         {/* child container */}
-        <div className=" sm:flex gap-6 justify-between  pb-6   ">
+        <div className=" sm:flex gap-6 justify-between  pb-5   ">
           {/* First column */}
           <SidebarMenu
             isDarkMode={isDarkMode}
@@ -93,7 +93,7 @@ const WeatherDashboardDisplayed = ({
                 isDarkMode ? "bg-gray-800" : "bg-gray-200"
               }  mt-5 p-6 rounded-3xl  `}
             >
-              <h2 className=" uppercase font-bold tracking-tight  text-sm">
+              <h2 className=" uppercase font-bold text-gray-500 tracking-tight  text-sm">
                 air conditions
               </h2>
 

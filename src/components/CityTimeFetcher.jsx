@@ -56,11 +56,11 @@ const CityTimeFetcher = ({ lat, lng }) => {
   return (
     <div>
       {error ? (
-        <p>
+        <div>
           <CurrentDateTime />
-        </p>
+        </div>
       ) : (
-        <p>{currentTime ? formatTime(currentTime) : "Loading..."}</p>
+        <span>{currentTime ? formatTime(currentTime) : "Loading..."}</span>
       )}
     </div>
   );
