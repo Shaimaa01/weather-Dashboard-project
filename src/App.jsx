@@ -12,7 +12,7 @@ import { useState, useEffect } from "react";
 function App() {
   const [isFirstVisit, setIsFirstVisit] = useState(true);
   const [isDarkMode, setIsDarkMode] = useState(
-    JSON.parse(localStorage.getItem("darkMode")) || false
+    JSON.parse(localStorage.getItem("darkMode")) || true
   );
 
   // Update localStorage whenever isDarkMode changes
