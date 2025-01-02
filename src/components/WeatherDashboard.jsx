@@ -204,6 +204,8 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
                 city={city}
                 setCity={setCity}
                 handleSearch={handleSearch}
+                predefinedCities={predefinedCities}
+                handlePredefinedCityClick={handlePredefinedCityClick}
               />
             ) : (
               <div>Loading map or no data available</div>
@@ -216,3 +218,4 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
 };
 
 export default WeatherDashboard;
+

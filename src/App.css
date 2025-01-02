@@ -63,3 +63,9 @@
   height: 35px !important;
   line-height: 35px !important;
 }
+
+.leaflet-tooltip {
+  background-color:transparent !important;
+  border:none !important;
+  box-shadow: none !important;
+}

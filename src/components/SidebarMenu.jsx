@@ -11,7 +11,7 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
     <div
       className={`${
         isDarkMode ? "bg-gray-800" : "bg-gray-200"
-      } rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2 max-sm:mb-4 max-sm:justify-evenly max-sm:bg-transparent`}
+      } rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2 max-sm:mb-4 max-sm:justify-evenly max-sm:bg-transparent `}
     >
       {/* Umbrella Icon */}
       <i className="fa-solid fa-umbrella text-sky-300 p-2 rounded-lg mb-5 max-sm:m-0"></i>
