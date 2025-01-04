@@ -54,7 +54,7 @@ const WeatherForThreeHours = ({ city, isDarkMode }) => {
                 </p>
                 <WeatherIcon
                   iconCode={hour.weather[0].icon}
-                  className="w-20 h-20 m-auto max-xl:w-16 max-xl:h-16 max-sm:w-10 max-sm:h-10"
+                  className="w-20 h-20 m-auto max-xl:w-16 max-xl:h-16 max-sm:w-16 max-sm:h-16"
                 />
                 <p className="font-bold text-2xl max-xl:text-xl">
                   {Math.round(hour.main.temp)}°

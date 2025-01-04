@@ -4,6 +4,7 @@ import SidebarMenu from "./SidebarMenu.jsx";
 import WeatherForDays from "./WeatherForDays.jsx";
 import WeatherForHours from "./WeatherForHours.jsx";
 import WeatherIcon from "./WeatherIcon.jsx";
+import WeatherForThreeHours from "./WeatherForThreeHours.jsx";
 
 const WeatherDashboardDisplayed = ({
   weatherData,
@@ -79,9 +80,21 @@ const WeatherDashboardDisplayed = ({
             <div
               className={`${
                 isDarkMode ? "bg-gray-800" : "bg-gray-200"
-              } rounded-3xl  p-6`}
+              } rounded-3xl  p-6 max-sm:hidden`}
             >
               <WeatherForHours
+                city={weatherData.name}
+                isDarkMode={isDarkMode}
+              />
+            </div>
+
+            {/* hours forcast for small devices */}
+            <div
+              className={`${
+                isDarkMode ? "bg-gray-800" : "bg-gray-200"
+              } rounded-3xl  p-6 sm:hidden`}
+            >
+              <WeatherForThreeHours
                 city={weatherData.name}
                 isDarkMode={isDarkMode}
               />

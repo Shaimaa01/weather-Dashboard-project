@@ -223,3 +223,4 @@ function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
 }
 
 export default WeatherDashboard;
+
