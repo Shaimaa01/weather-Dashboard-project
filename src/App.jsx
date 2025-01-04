@@ -15,6 +15,8 @@ function App() {
     JSON.parse(localStorage.getItem("darkMode")) || true
   );
 
+ 
+
   // Update localStorage whenever isDarkMode changes
   useEffect(() => {
     localStorage.setItem("darkMode", JSON.stringify(isDarkMode));
@@ -67,3 +69,5 @@ function App() {
 }
 
 export default App;
+
+

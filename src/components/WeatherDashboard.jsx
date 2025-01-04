@@ -5,11 +5,14 @@ import WeatherDashboardDisplayed from "./WeatherDashboardDisplayed.jsx";
 import { Routes, Route, useLocation } from "react-router-dom";
 import CityMap from "./CityMap.jsx";
 import PredefinedCities from "./PredefinedCities.jsx";
+import _ from "lodash";
 
-const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
+function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
   const [city, setCity] = useState("");
   const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState("");
+
+
 
   // List of predefined cities
   const [predefinedCities, setPredefinedCities] = useState(
@@ -76,15 +79,17 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
       localStorage.getItem("predefinedCities")
     ) || ["Cairo", "Poland", "Brazil", "Antarctica"];
 
+    const formattedCity = _.capitalize(newCity);
+
     // Check if the city already exists in the predefined cities array
-    if (!updatedCities.includes(newCity)) {
+    if (!updatedCities.includes(formattedCity)) {
       // If there are already 4 cities, remove the first one
       if (updatedCities.length >= 4) {
         updatedCities.pop();
       }
 
       // Add the new city to the array
-      updatedCities.unshift(newCity);
+      updatedCities.unshift(formattedCity);
 
       // update array of the citties
       setPredefinedCities(updatedCities);
@@ -215,7 +220,6 @@ const WeatherDashboard = ({ isDarkMode, toggleDarkMode }) => {
       </Routes>
     </>
   );
-};
+}
 
 export default WeatherDashboard;
-
