@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
@@ -8,20 +9,35 @@ import "../App.css";
 const WeatherForThreeDays = ({ city, isDarkMode }) => {
   console.log(isDarkMode);
   if (city) {
-    const [forecastData, setForecastData] = useState(null);
+    const [forecastData, setForecastData] = useState(
+      JSON.parse(localStorage.getItem(`${city}-forecast`)) || null
+    );
     const [error, setError] = useState("");
+
+    // Function to calculate time until midnight
+    const timeUntilMidnight = () => {
+      const now = new Date();
+      const midnight = new Date(now);
+      midnight.setHours(24, 0, 0, 0); // Set to next midnight (12 AM)
+      return midnight - now;
+    };
 
     useEffect(() => {
       const fetchForecast = async () => {
         try {
           const data = await getForecast(city);
           setForecastData(data);
+          localStorage.setItem(`${city}-forecast`, JSON.stringify(data));
         } catch (err) {
           setError(err.message);
         }
       };
 
       fetchForecast();
+
+      const intervalId = setInterval(fetchForecast, timeUntilMidnight());
+
+      return () => clearInterval(intervalId);
     }, [city]);
 
     // Function to get the unique forecast data
@@ -71,15 +87,17 @@ const WeatherForThreeDays = ({ city, isDarkMode }) => {
         <h2 className="text-gray-500 uppercase font-bold tracking-tight text-sm">
           3-Day forecast
         </h2>
-        {forecastData  ? (
+        {forecastData ? (
           <ul
             className={`${
               isDarkMode ? "custom-border" : "custom-border-light"
-            }  ` }
+            }  `}
           >
-            {getUniqueForecast(forecastData).slice(0,3).map((day, index) => (
-              <li key={index}>{formatForecast(day, index === 0)}</li>
-            ))}
+            {getUniqueForecast(forecastData)
+              .slice(0, 3)
+              .map((day, index) => (
+                <li key={index}>{formatForecast(day, index === 0)}</li>
+              ))}
           </ul>
         ) : (
           <p>

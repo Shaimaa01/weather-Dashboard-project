@@ -17,7 +17,9 @@ const PredefinedCities = ({
   predefinedCities,
   weatherData,
 }) => {
-  const [cityWeatherData, setCityWeatherData] = useState({});
+  const [cityWeatherData, setCityWeatherData] = useState(
+    JSON.parse(localStorage.getItem("citiesData")) || {}
+  );
 
   useEffect(() => {
     const fetchCityWeather = async () => {
@@ -41,6 +43,13 @@ const PredefinedCities = ({
 
     fetchCityWeather();
   }, [predefinedCities]);
+
+  // Update localStorage only when cityWeatherData changes
+  useEffect(() => {
+    if (cityWeatherData) {
+      localStorage.setItem("citiesData", JSON.stringify(cityWeatherData));
+    }
+  }, [cityWeatherData]);
 
   return (
     // container

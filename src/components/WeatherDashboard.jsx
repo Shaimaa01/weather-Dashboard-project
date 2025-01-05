@@ -12,8 +12,6 @@ function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
   const [weatherData, setWeatherData] = useState();
   const [error, setError] = useState("");
 
-
-
   // List of predefined cities
   const [predefinedCities, setPredefinedCities] = useState(
     JSON.parse(localStorage.getItem("predefinedCities")) || [
@@ -62,7 +60,6 @@ function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
     const interval = setInterval(async () => {
       try {
         const data = await getWeather(getFromLocalStorage()?.data?.name);
-        console.log("Updated weather data:", data);
         setWeatherData(data);
         saveToLocalStorage(data);
       } catch (error) {
@@ -156,13 +153,9 @@ function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
         }
       };
 
-      fetchData(); // Call the fetch function
-    } else {
-      console.log(" Local Storage not empty");
+      fetchData();
     }
   }, []);
-
-  console.log(weatherData);
 
   return (
     <>
@@ -223,4 +216,3 @@ function WeatherDashboard({ isDarkMode, toggleDarkMode }) {
 }
 
 export default WeatherDashboard;
-

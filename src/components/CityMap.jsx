@@ -1,6 +1,6 @@
 /* eslint-disable react/prop-types */
-import 'leaflet-defaulticon-compatibility';
-import 'leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css';
+import "leaflet-defaulticon-compatibility";
+import "leaflet-defaulticon-compatibility/dist/leaflet-defaulticon-compatibility.css";
 import { MapContainer, TileLayer, Marker, Tooltip } from "react-leaflet";
 import { useState, useEffect } from "react";
 import "leaflet/dist/leaflet.css";
@@ -20,7 +20,9 @@ const CityMap = ({
   handlePredefinedCityClick,
 }) => {
   const [position, setPosition] = useState([0, 0]);
-  const [cityWeatherData, setCityWeatherData] = useState({});
+  const [cityWeatherData, setCityWeatherData] = useState(
+    JSON.parse(localStorage.getItem("citiesData")) || {}
+  );
 
   useEffect(() => {
     const fetchCityWeather = async () => {
@@ -44,6 +46,13 @@ const CityMap = ({
 
     fetchCityWeather();
   }, [predefinedCities]);
+
+  // Update localStorage only when cityWeatherData changes
+  useEffect(() => {
+    if (cityWeatherData) {
+      localStorage.setItem("citiesData", JSON.stringify(cityWeatherData));
+    }
+  }, [cityWeatherData]);
 
   // Handle the initial center based on one city's lat/lng (e.g., first city)
   useEffect(() => {

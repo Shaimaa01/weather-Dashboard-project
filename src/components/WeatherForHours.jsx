@@ -7,20 +7,29 @@ import "../App.css";
 
 const WeatherForHours = ({ city, isDarkMode }) => {
   if (city) {
-    const [forecastData, setForecastData] = useState(null);
+    const [forecastData, setForecastData] = useState(
+      JSON.parse(localStorage.getItem(`${city}-forecast`)) || null
+    );
     const [error, setError] = useState("");
 
     useEffect(() => {
       const fetchForecast = async () => {
         try {
           const data = await getForecast(city);
+
           setForecastData(data);
+
+          localStorage.setItem(`${city}-forecast`, JSON.stringify(data));
         } catch (err) {
           setError(err.message);
         }
       };
 
       fetchForecast();
+
+      const intervalId = setInterval(fetchForecast, 10800000); // 3 hours in milliseconds
+
+      return () => clearInterval(intervalId);
     }, [city]);
 
     // Function to convert 24-hour time to 12-hour format with AM/PM
