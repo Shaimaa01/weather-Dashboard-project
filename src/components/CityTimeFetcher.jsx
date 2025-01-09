@@ -1,12 +1,13 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable react/prop-types */
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef } from "react";
 import axios from "axios";
 import CurrentDateTime from "./CurrentDateTime";
 
 const CityTimeFetcher = ({ lat, lng }) => {
   const [currentTime, setCurrentTime] = useState(null);
   const [error, setError] = useState("");
+  const intervalRef = useRef(null); // Store the interval reference
 
   const fetchCityTime = async () => {
     const url = `https://api.allorigins.win/get?url=${encodeURIComponent(
@@ -26,23 +27,29 @@ const CityTimeFetcher = ({ lat, lng }) => {
     }
   };
 
+  // Fetch time on initial mount or lat/lng change
   useEffect(() => {
     if (lat && lng) {
       fetchCityTime();
-      console.log("lant lang are you working ")
     }
   }, [lat, lng]);
 
+  // Handle time updates every second
   useEffect(() => {
     if (currentTime) {
-      const intervalId = setInterval(() => {
+      intervalRef.current = setInterval(() => {
         setCurrentTime((prevTime) => {
-          return new Date(prevTime.getTime() + 1000); // Increment by 1 second
+          if (prevTime) {
+            return new Date(prevTime.getTime() + 1000); // Increment by 1 second
+          }
+          return prevTime;
         });
       }, 1000);
-      return () => clearInterval(intervalId); // that make time not accurate
     }
-  });
+
+    // Cleanup on unmount or time change
+    return () => clearInterval(intervalRef.current);
+  }, [currentTime]);
 
   const formatTime = (time) => {
     const hours = time.getHours();
@@ -67,3 +74,7 @@ const CityTimeFetcher = ({ lat, lng }) => {
 };
 
 export default CityTimeFetcher;
+
+
+
+

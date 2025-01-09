@@ -17,32 +17,35 @@ const PredefinedCities = ({
   predefinedCities,
   weatherData,
 }) => {
-  const [cityWeatherData, setCityWeatherData] = useState(
-    JSON.parse(localStorage.getItem("citiesData")) || {}
-  );
+  const [cityWeatherData, setCityWeatherData] = useState({});
 
   useEffect(() => {
-    const fetchCityWeather = async () => {
-      for (const city of predefinedCities) {
-        try {
-          const data = await getWeather(city);
-          setCityWeatherData((prevData) => ({
-            ...prevData,
-            [city]: {
-              temp: data.main.temp,
-              icon: data.weather[0].icon,
-              lat: data.coord.lat,
-              lon: data.coord.lon,
-            },
-          }));
-        } catch (error) {
-          console.error(`Failed to fetch weather for ${city}:`, error);
-        }
-      }
-    };
+    const cachedData = JSON.parse(localStorage.getItem("citiesData"));
+    if (cachedData) {
+      setCityWeatherData(cachedData);
+    }
+  }, []);
 
-    fetchCityWeather();
-  }, [predefinedCities]);
+ useEffect(() => {
+  const fetchCityWeather = async () => {
+    const updatedData = {};
+    for (const city of predefinedCities) {
+      try {
+        const data = await getWeather(city);
+        updatedData[city] = {
+          temp: data.main.temp,
+          icon: data.weather[0].icon,
+          lat: data.coord.lat,
+          lon: data.coord.lon,
+        };
+      } catch (error) {
+        console.error(`Failed to fetch weather for ${city}:`, error);
+      }
+    }
+    setCityWeatherData((prevData) => ({ ...prevData, ...updatedData }));
+  };
+  fetchCityWeather();
+}, [predefinedCities]);
 
   // Update localStorage only when cityWeatherData changes
   useEffect(() => {
@@ -89,9 +92,9 @@ const PredefinedCities = ({
               className=""
             >
               <div
-                className={`mt-4 flex justify-between items-center rounded-3xl px-6 py-1 hover:border-2 hover:border-sky-700 hover:bg-transparent transition duration-300 ${
+                className={`mt-4 flex justify-between items-center rounded-3xl px-6 py-1 border-2 border-transparent hover:border-sky-700 hover:bg-transparent transition duration-300 ${
                   isDarkMode ? "bg-gray-800" : "bg-gray-200"
-                }`}
+                } `}
               >
                 {cityWeatherData[city] && (
                   <>
@@ -99,7 +102,7 @@ const PredefinedCities = ({
                       {/* icon */}
                       <WeatherIcon
                         iconCode={cityWeatherData[city].icon}
-                        className="w-28 h-28 my-auto "
+                        className="w-28 h-28 my-auto 2xl:h-36 2xl:w-36"
                       />
 
                       {/*City and Data */}
@@ -127,7 +130,7 @@ const PredefinedCities = ({
 
         {/* Third colmun */}
         <div
-          className={` w-1/4 self-end  max-lg:hidden ${
+          className={` w-1/4 self-end xl:self-stretch xl:pt-14  max-lg:hidden ${
             isDarkMode ? " text-slate-300 " : "text-black "
           }`}
         >

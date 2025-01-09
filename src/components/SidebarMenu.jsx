@@ -11,7 +11,7 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
     <div
       className={`${
         isDarkMode ? "bg-gray-800" : "bg-gray-200"
-      } rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2 max-sm:mb-4 max-sm:justify-evenly max-sm:bg-transparent `}
+      } relative rounded-3xl px-4 text-xl py-5 flex flex-col gap-7 items-center max-sm:flex-row max-sm:px-4 max-sm:p-2 max-sm:mb-4 max-sm:justify-evenly max-sm:bg-transparent `}
     >
       {/* Umbrella Icon */}
       <i className="fa-solid fa-umbrella text-sky-300 p-2 rounded-lg mb-5 max-sm:m-0"></i>
@@ -66,7 +66,7 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
 
       {/* Dark Mode Toggle */}
       <div
-        className={`text-center cursor-pointer transition-colors duration-300 ${
+        className={`text-center cursor-pointer transition-colors duration-300 sm:absolute sm:bottom-10   ${
           isDarkMode ? "text-gray-500" : "text-yellow-500"
         }`}
         onClick={toggleDarkMode}
@@ -76,7 +76,7 @@ const SidebarMenu = ({ isDarkMode, toggleDarkMode }) => {
         ) : (
           <i className="fa-solid fa-sun text-yellow-500"></i>
         )}
-        <p className="text-sm font-medium">{isDarkMode ? "Dark" : "Light"}</p>
+        {/* <p className="text-sm font-medium">{isDarkMode ? "Dark" : "Light"}</p> */}
       </div>
     </div>
   );

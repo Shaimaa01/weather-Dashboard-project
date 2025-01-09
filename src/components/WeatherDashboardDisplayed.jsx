@@ -21,7 +21,7 @@ const WeatherDashboardDisplayed = ({
       <div
         className={` ${
           isDarkMode ? "bg-gray-950 text-slate-300" : "bg-slate-50 text-black"
-        }  min-h-screen p-6 `}
+        }  min-h-screen p-6  `}
       >
         {/* child container */}
         <div className=" sm:flex gap-6 justify-between  pb-5   ">

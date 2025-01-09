@@ -9,10 +9,16 @@ import "../App.css";
 const WeatherForThreeDays = ({ city, isDarkMode }) => {
   console.log(isDarkMode);
   if (city) {
-    const [forecastData, setForecastData] = useState(
-      JSON.parse(localStorage.getItem(`${city}-forecast`)) || null
-    );
+    const [forecastData, setForecastData] = useState(null);
     const [error, setError] = useState("");
+
+    // Use useEffect to set data from localStorage once
+    useEffect(() => {
+      const storedData = localStorage.getItem("weatherForThreeDays");
+      if (storedData) {
+        setForecastData(JSON.parse(storedData));
+      }
+    }, []);
 
     // Function to calculate time until midnight
     const timeUntilMidnight = () => {
@@ -27,7 +33,7 @@ const WeatherForThreeDays = ({ city, isDarkMode }) => {
         try {
           const data = await getForecast(city);
           setForecastData(data);
-          localStorage.setItem(`${city}-forecast`, JSON.stringify(data));
+          localStorage.setItem("weatherForThreeDays", JSON.stringify(data));
         } catch (err) {
           setError(err.message);
         }

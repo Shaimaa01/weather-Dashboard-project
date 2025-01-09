@@ -21,7 +21,7 @@ const CityMap = ({
 }) => {
   const [position, setPosition] = useState([0, 0]);
   const [cityWeatherData, setCityWeatherData] = useState(
-    JSON.parse(localStorage.getItem("citiesData")) || {}
+    JSON.parse(localStorage.getItem("citiesMapData")) || {}
   );
 
   useEffect(() => {
@@ -50,7 +50,7 @@ const CityMap = ({
   // Update localStorage only when cityWeatherData changes
   useEffect(() => {
     if (cityWeatherData) {
-      localStorage.setItem("citiesData", JSON.stringify(cityWeatherData));
+      localStorage.setItem("citiesMapData", JSON.stringify(cityWeatherData));
     }
   }, [cityWeatherData]);
 
@@ -90,7 +90,7 @@ const CityMap = ({
     <div
       className={` ${
         isDarkMode ? "bg-gray-950 text-slate-300" : "bg-slate-50 text-black"
-      }  min-h-screen p-6 pb-0`}
+      }  min-h-screen p-6 pb-0 `}
     >
       {/* child container */}
       <div className=" sm:flex gap-6 justify-between  pb-8 min-h-screen max-sm:block ">
@@ -156,15 +156,15 @@ const CityMap = ({
                         <div
                           className={`${
                             isDarkMode
-                              ? "bg-gray-700 text-slate-300"
-                              : "bg-gray-200 text-gray-900"
-                          } py-4 px-8 rounded-2xl text-center`}
+                              ? "bg-gray-700 text-slate-300 border-gray-500"
+                              : "bg-gray-200 text-gray-900 border-gray-300"
+                          } py-2 px-4 rounded-2xl text-center border-2 `}
                         >
-                          <p className="font-bold text-2xl -mb-4">{city}</p>
+                          <p className="font-bold text-lg -mb-4">{city}</p>
 
                           <WeatherIcon
                             iconCode={weather.icon}
-                            className="w-24 h-24 m-auto"
+                            className="w-20 h-20 m-auto"
                           />
 
                           <div className="text-2xl font-medium -mt-4">
@@ -193,7 +193,7 @@ const CityMap = ({
               className=""
             >
               <div
-                className={`mt-4 flex justify-between items-center rounded-3xl px-6 py-1 pl-1 hover:border-2 hover:border-sky-700 hover:bg-transparent transition duration-300 ${
+                className={`mt-4 flex justify-between items-center rounded-3xl px-6 py-1 pl-1 border-2 border-transparent hover:border-sky-700 hover:bg-transparent transition duration-300 ${
                   isDarkMode ? "bg-gray-800" : "bg-gray-200"
                 }`}
               >

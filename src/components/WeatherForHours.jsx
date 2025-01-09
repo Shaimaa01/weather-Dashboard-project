@@ -7,19 +7,27 @@ import "../App.css";
 
 const WeatherForHours = ({ city, isDarkMode }) => {
   if (city) {
-    const [forecastData, setForecastData] = useState(
-      JSON.parse(localStorage.getItem(`${city}-forecast`)) || null
-    );
+    const [forecastData, setForecastData] = useState(null);
     const [error, setError] = useState("");
 
     useEffect(() => {
+      // Check if forecast data exists in localStorage
+      const cachedData = JSON.parse(localStorage.getItem("weatherForHours"));
+      if (cachedData) {
+        try {
+          setForecastData(cachedData);
+        } catch (e) {
+          console.error("Invalid JSON in localStorage:", e);
+        }
+      }
+
       const fetchForecast = async () => {
         try {
           const data = await getForecast(city);
 
           setForecastData(data);
 
-          localStorage.setItem(`${city}-forecast`, JSON.stringify(data));
+          localStorage.setItem("weatherForHours", JSON.stringify(data));
         } catch (err) {
           setError(err.message);
         }
@@ -47,7 +55,7 @@ const WeatherForHours = ({ city, isDarkMode }) => {
       <>
         {error && <div>Error: {error}</div>}
         <h3 className="text-gray-500  uppercase font-bold tracking-tight pb-4 text-sm ">
-          today&apos;sForecast
+          today&apos;s Forecast
         </h3>
         <div className="grid grid-cols-6  text-center justify-items-stretch content-end">
           {hoursData.length > 0 ? (
